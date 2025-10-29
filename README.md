@@ -1,4 +1,5 @@
 Project Report: Diabetes Risk Prediction
+This project built a diabetes risk prediction model using demographic and health-related data from a balanced dataset of 1,000 records. Ten machine learning algorithms were compared after rigorous preprocessing, feature engineering, and hyperparameter tuning. The LightGBM model achieved the best overall performance, reaching an accuracy of 83.2% and a recall of 0.87, making it an effective early-warning tool for diabetes risk detection.
 
 This file summarizes the data processing and compares the performance of 10 machine learning models used to predict diabetes risk.
 
@@ -7,6 +8,21 @@ This file summarizes the data processing and compares the performance of 10 mach
 The primary goal was to build a risk assessment model. The model should predict a person's risk of having diabetes based on demographic/health factors and a single blood glucose reading (which can be obtained from an at-home meter).
 
 The model avoids using the final diagnostic test (HbA1c_level) to remain a useful early-warning tool rather than a post-diagnosis tool.
+
+
+Data Features
+
+| Feature             | Type        | Description                                      |
+| ------------------- | ----------- | ------------------------------------------------ |
+| age                 | Numeric     | Age of the individual                            |
+| gender              | Categorical | Male/Female                                      |
+| hypertension        | Binary      | 1 if hypertensive, 0 otherwise                   |
+| heart_disease       | Binary      | 1 if heart disease present                       |
+| smoking_history     | Categorical | Never, Former, Current                           |
+| blood_glucose_level | Numeric     | Blood glucose reading (mg/dL)                    |
+| HbA1c_level         | Numeric     | Long-term diagnostic glucose marker (dropped)    |
+| diabetes            | Binary      | Target variable (1 = diabetic, 0 = non-diabetic) |
+
 
 2. Data Preprocessing
 
@@ -331,6 +347,23 @@ Classification Report:
    macro avg       0.82      0.82      0.82       500
 weighted avg       0.82      0.82      0.82       500
 
+Overall Model Comaprison
+
+| Model               | Accuracy  | Weighted F1 | Class 1 Recall | Scaling | Key Notes                            |
+| ------------------- | --------- | ----------- | -------------- | ------- | ------------------------------------ |
+| LightGBM            | **83.2%** | **0.83**    | 0.87           | No      | Best overall performer               |
+| XGBoost             | 82.2%     | 0.82        | 0.87           | No      | Very close second                    |
+| MLP                 | 82.0%     | 0.82        | 0.85           | Yes     | Strong neural model                  |
+| Decision Tree       | 80.2%     | 0.80        | **0.94**       | No      | Highest recall, more false positives |
+| Random Forest       | 81.4%     | 0.81        | 0.87           | No      | Stable ensemble                      |
+| AdaBoost            | 81.6%     | 0.81        | 0.88           | No      | Good recall                          |
+| KNN                 | 80.2%     | 0.80        | 0.85           | Yes     | Simpler, reliable                    |
+| SVM                 | 80.2%     | 0.80        | 0.83           | Yes     | Balanced performance                 |
+| Logistic Regression | 79.4%     | 0.79        | 0.80           | Yes     | Weak baseline                        |
+| Naive Bayes         | 79.4%     | 0.79        | 0.73           | No      | Missed many positives                |
+
+
+I think 🤔 ensemble models like LightGBM and XGBoost excelled because they capture nonlinear relationships and complex feature interactions. Traditional models such as Logistic Regression and Naive Bayes, which assume linear or conditional independence, underperformed due to the dataset's mixed numeric and categorical structure.
 
 4. Performance Summary & Conclusion
 
